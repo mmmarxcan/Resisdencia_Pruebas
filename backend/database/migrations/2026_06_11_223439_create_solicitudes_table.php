@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('mercancia_adicionales')->nullable(false);
             $table->json('servicios_adicionales')->nullable();
             $table->string('estatus')->default('pendiente');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

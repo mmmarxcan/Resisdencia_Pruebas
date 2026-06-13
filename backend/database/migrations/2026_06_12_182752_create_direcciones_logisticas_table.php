@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('solicitud_id')->constrained('solicitudes')->onDelete('cascade');
             $table->string('tipo');
             $table->string('direccion');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
