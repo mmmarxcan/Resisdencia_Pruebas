@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSolicitudRequest;
 //use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use App\Models\Solicitud;
@@ -21,23 +22,26 @@ class SolicitudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSolicitudRequest $request)
     {
+        $datosValidos = $request->validated();
+
         try {
-            return DB::transaction(function() use ($request) {
-                $nuevaSolicitud = Solicitud::create($request->all());
-                if ($request->has('direcciones')){
-                    $nuevaSolicitud->direcciones()->createMany($request->direcciones);
+            $solicitudCreada = DB::transaction( function() use ($datosValidos){
+                $solicitud = Solicitud::create($datosValidos);
+                if(isset($datosValidos['direcciones'])){
+                    $solicitud->direcciones()->createMany($datosValidos['direcciones']);
                 }
-                return response()->json([
-                    'mensaje' => 'Solicitud Creada con exito',
-                    'data' => $nuevaSolicitud->load('direcciones')
-                ], 201);
+                return $solicitud;
             });
+            return response()->json([
+                'mensaje' => 'Solicitud Creada con exito',
+                'data' => $solicitudCreada->load('direcciones')
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'mensaje' => 'Error al crear la solicitud',
-                'error' => $e->getMessage()
+            'error' => $e->getMessage()
             ], 500);
         }
     }
