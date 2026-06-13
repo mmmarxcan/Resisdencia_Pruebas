@@ -15,8 +15,8 @@ class DireccionLogistica extends Model
     protected $fillable = [
         'solicitud_id',
         'tipo',
-        'direccion',
-        'direcciones_logisticas',
+        'direccion_origen',
+        'direccion_destino',
     ];
 
     public function solicitud(){

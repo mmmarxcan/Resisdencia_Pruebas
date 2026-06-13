@@ -24,20 +24,16 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         try {
-            $solicitud = DB::transaction(function () use ($request){
-
-            $nuevaSolicitud = Solicitud::create($request->all());
-            if ($request->has('direcciones') && is_array($request->direcciones)) {
-                $nuevaSolicitud->direcciones()->createMany($request->direcciones);
-            }
-            return  $nuevaSolicitud;
+            return DB::transaction(function() use ($request) {
+                $nuevaSolicitud = Solicitud::create($request->all());
+                if ($request->has('direcciones')){
+                    $nuevaSolicitud->direcciones()->createMany($request->direcciones);
+                }
+                return response()->json([
+                    'mensaje' => 'Solicitud Creada con exito',
+                    'data' => $nuevaSolicitud->load('direcciones')
+                ], 201);
             });
-
-            return response()->json([
-                'mensaje' => 'Solicitud logistica creada con exito',
-                'data' => $solicitud->load('direcciones'),
-            ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'mensaje' => 'Error al crear la solicitud',

@@ -10,7 +10,7 @@ class Solicitud extends Model
 {
     use HasFactory , SoftDeletes ;
 
-    protected $table = 'Solicitudes';
+    protected $table = 'solicitudes';
 
     protected $fillable = [
         'incoterm',
