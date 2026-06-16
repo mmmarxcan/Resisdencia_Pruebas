@@ -13,8 +13,8 @@ const FormularioSolicitud = () => {
     numero_bultos: "",
     mercancia_adicionales: false,
     servicios_adicionales: {
-      seguro: false,
-      maniobra_descarga: false,
+      seguro: solicitud.servicios_adicionales?.includes('seguro') ?? false,
+      maniobra_descarga: solicitud.servicios_adicionales?.includes('maniobras') ?? false,
     },
     direcciones: [
       {

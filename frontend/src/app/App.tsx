@@ -1,7 +1,8 @@
 import FormularioSolicitud from './components/FormularioSolicitud';
+import ListaSolicitudes from './components/ListaSolicitudes';
 import ChatAsistente from './components/ChatAsistente';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
-import { FileText, MessageSquare } from 'lucide-react';
+import { FileText, MessageSquare , List } from 'lucide-react';
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
           <div className="mb-6">
             <h2 className="text-3xl font-bold text-slate-900">Nueva Solicitud de Servicio</h2>
             <p className="text-slate-600 mt-1">
-              Complete el formulario o use el asistente por chat para registrar su solicitud
+              Complete el formulario, use el asistente o vea sus solicitudes guardadas
             </p>
           </div>
 
@@ -39,6 +40,10 @@ export default function App() {
                 <FileText className="size-4" />
                 Formulario
               </TabsTrigger>
+               <TabsTrigger value="solicitudes" className="gap-2 px-4">
+                <List className="size-4" />
+                Mis Solicitudes
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="chat">
@@ -48,6 +53,11 @@ export default function App() {
             <TabsContent value="formulario">
               <FormularioSolicitud />
             </TabsContent>
+            
+            <TabsContent value="solicitudes">
+              <ListaSolicitudes />
+            </TabsContent>
+            
           </Tabs>
         </div>
       </main>

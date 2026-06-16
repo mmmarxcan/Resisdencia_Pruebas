@@ -32,7 +32,7 @@ class StoreSolicitudRequest extends FormRequest
             'unidad_peso'          => 'required|string',
             'numero_bultos'        => 'required|numeric',
             'mercancia_adicionales'=> 'required|boolean',
-            'servicios_adicionales' => 'required|array',
+            'servicios_adicionales' => 'nullable|array',
             'direcciones'          => 'required|array|min:1',
             'direcciones.*.tipo'   => 'required|string',
             'direcciones.*.direccion_origen' => 'required|string',

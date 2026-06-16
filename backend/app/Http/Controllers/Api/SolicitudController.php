@@ -16,7 +16,8 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        //
+        $solicitudes = Solicitud::with('direcciones')->orderBy('created_at', 'desc')->get();
+        return response()->json(['data' => $solicitudes], 200);
     }
 
     /**
