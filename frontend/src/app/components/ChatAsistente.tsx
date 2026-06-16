@@ -55,6 +55,13 @@ const OPCIONES_SERVICIO = [
   { valor: 'multimodal', etiqueta: 'Multimodal' },
 ];
 
+const OPCIONES_INCOTERM = [
+  {valor: 'FOB' , etiqueta: 'FOB'},
+  {valor: 'CIF' , etiqueta: 'CIF'},
+  {valor: 'EXW' , etiqueta: 'EXW'},
+  {valor: 'DDP' , etiqueta: 'DDP'},
+];
+
 const OPCIONES_DIVISA = ['USD', 'EUR', 'MXN', 'CAD'];
 
 const OPCIONES_PESO = [
@@ -165,10 +172,10 @@ function siguientePaso(paso: Paso): Paso {
     'incoterm',
     'tipo_servicio',
     'descripcion_material',
-    'valor_factura',
     'divisa',
-    'peso_total',
+    'valor_factura',
     'unidad_peso',
+    'peso_total',
     'numero_bultos',
     'servicios_adicionales',
     'direccion_origen',
@@ -190,14 +197,14 @@ function actualizarDraft(paso: Paso, texto: string, draft: SolicitudDraft): Soli
       return { ...draft, tipo_servicio: valor };
     case 'descripcion_material':
       return { ...draft, descripcion_material: valor };
-    case 'valor_factura':
-      return { ...draft, valor_factura: Number(valor) };
     case 'divisa':
       return { ...draft, divisa: valor.toUpperCase() };
-    case 'peso_total':
-      return { ...draft, peso_total: Number(valor) };
+    case 'valor_factura':
+      return { ...draft, valor_factura: Number(valor) };
     case 'unidad_peso':
       return { ...draft, unidad_peso: valor };
+      case 'peso_total':
+      return { ...draft, peso_total: Number(valor) };
     case 'numero_bultos':
       return { ...draft, numero_bultos: Number(valor) };
     case 'servicios_adicionales':
@@ -341,6 +348,7 @@ export default function ChatAsistente() {
   };
 
   const opcionesRapidas = () => {
+    if (paso === 'incoterm') return OPCIONES_INCOTERM;
     if (paso === 'tipo_servicio') return OPCIONES_SERVICIO;
     if (paso === 'divisa') return OPCIONES_DIVISA.map((d) => ({ valor: d, etiqueta: d }));
     if (paso === 'unidad_peso') return OPCIONES_PESO;
